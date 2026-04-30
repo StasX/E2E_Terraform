@@ -1,7 +1,7 @@
 resource "aws_security_group" "sg" {
   name        = "sg"
   description = "Security group"
-  vpc_id      = module.infra.vpc_id
+  vpc_id      = module.network.vpc_id
 
   ingress {
     description = "SSH"
