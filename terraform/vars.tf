@@ -18,3 +18,8 @@ variable "vpc_id" {
   type = string
   default = "vpc-01edce99b85a99ff2"
 }
+
+variable "key_name"{
+  type = string
+  default = "builder-key"
+}

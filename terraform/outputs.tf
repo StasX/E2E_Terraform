@@ -6,7 +6,7 @@ output "public_ip" {
 
 output "key_path" {
   description = "Path to the generated private SSH key"
-  value       = module.keygen.private_key_path
+  value       = local_file.private_key.filename
 }
 
 output "sec_group_id" {
