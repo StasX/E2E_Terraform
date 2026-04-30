@@ -9,14 +9,29 @@ variable "AWS_SECRET_ACCESS_KEY" {
   sensitive = true
 }
 
-variable "region" {
+variable "AWS_REGION" {
   type    = string
-  default = "us-east-1"
+  sensitive = true
 }
 
 variable "vpc_id" {
   type = string
-  default = "vpc-01edce99b85a99ff2"
+  default = "vpc-02cb949d2612494f5"
+}
+
+variable "availability_zone" {
+  type = string
+  default = "us-east-1b"
+}
+
+
+variable "ami" {
+  type = string
+  default = "ami-098e39bafa7e7303d"
+}
+variable "instance_type" {
+  type = string
+  default = "t3.small"
 }
 
 variable "key_name"{
