@@ -1,3 +1,7 @@
+data "http" "my_ip" {
+  url = "https://ifconfig.me/ip"
+}
+
 resource "aws_security_group" "sg" {
   name        = "sg"
   description = "Security group"
