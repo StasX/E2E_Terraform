@@ -1,7 +1,10 @@
+# Get the public IP address of the machine running Terraform
 data "http" "my_ip" {
   url = "https://ifconfig.me/ip"
 }
 
+
+# Create a security group allowing SSH and HTTP access
 resource "aws_security_group" "sg" {
   name        = "sg"
   description = "Security group"
