@@ -3,7 +3,7 @@ resource "aws_instance" "builder" {
   instance_type               = var.instance_type
   availability_zone           = var.availability_zone
   vpc_security_group_ids      = [aws_security_group.sg.id]
-  subnet_id                   = module.network.subnet_ids[3]
+  subnet_id                   = module.network.subnet_ids[0]
   key_name                    = aws_key_pair.instance_key.key_name
   associate_public_ip_address = true
   tags = {
