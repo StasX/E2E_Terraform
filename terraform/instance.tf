@@ -20,7 +20,14 @@ resource "aws_instance" "builder" {
 
   provisioner "remote-exec" {
     inline = [
-      "echo 'Hello'"
+"sudo dnf update -y",
+      "sudo dnf install -y docker",
+      "sudo systemctl start docker",
+      "sudo systemctl enable docker",
+      "sudo usermod -aG docker ec2-user",
+      "sudo dnf install -y docker-compose-plugin",
+      "docker --version",
+      "docker compose --version"
     ]
   }
   depends_on = [module.network.subnet_ids, aws_security_group.sg, aws_key_pair.instance_key]
