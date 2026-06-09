@@ -1,0 +1,63 @@
+name: main-workflow
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "README.md"
+      # - ".github/workflows/**"
+      - "Jenkinsfile"
+      - "jenkinsfile"
+      
+
+permissions:
+  contents: read
+
+jobs:
+
+  checkov-testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+
+      - name: Install Checkov
+        run: pip install checkov
+      - name: Run Checkov on Terraform
+        run: checkov -d . --framework terraform
+
+  trivy-testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate Trivy Vulnerability Report
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          scan-type: "fs"
+          output: trivy-report.json
+          format: json
+          scan-ref: .
+          exit-code: 0
+
+      - name: Upload Vulnerability Scan Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-report
+          path: trivy-report.json
+          retention-days: 30
+
+      - name: Fail build on High/Criticial Vulnerabilities
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          scan-type: "fs"
+          format: table
+          scan-ref: .
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: 1
+          skip-setup-trivy: true
+
